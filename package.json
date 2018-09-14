@@ -1,0 +1,32 @@
+{
+  "name": "stock-ticker-frontend",
+  "version": "1.0.0",
+  "description": "A lightweight frontend for managing my friend's stock ticker",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaceyPenny/stock-ticker-frontend.git"
+  },
+  "keywords": [
+    "stock",
+    "ticker",
+    "frontend"
+  ],
+  "author": "Jace McPherson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JaceyPenny/stock-ticker-frontend/issues"
+  },
+  "homepage": "https://github.com/JaceyPenny/stock-ticker-frontend#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "dotenv": "^6.0.0",
+    "eslint": "^5.5.0"
+  }
+}
