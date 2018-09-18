@@ -1,0 +1,25 @@
+.login-black-bg {
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    background-color: black;
+}
+
+.login-background {
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center center;
+    background-image: url('../../../assets/img/login-background.png');
+    -webkit-filter: blur(6px); /* Safari 6.0 - 9.0 */
+    filter: blur(6px);
+}

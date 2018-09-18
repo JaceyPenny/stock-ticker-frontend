@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" class="content-header mat-elevation-z8">
+    <h1>
+        Stock Ticker Manager
+    </h1>
+    <span class="toolbar-fill-remaining-space"></span>
+    <span>
+        <button mat-button (click)="onLogoutClicked()">
+            <i class="fa fa-lock"></i>
+            Logout
+        </button>
+    </span>
+</mat-toolbar>
+
+<div class="content-class">
+    <router-outlet></router-outlet>
+</div>

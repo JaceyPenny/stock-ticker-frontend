@@ -4,9 +4,9 @@
   "description": "A lightweight frontend for managing my friend's stock ticker",
   "main": "server.js",
   "scripts": {
-    "postinstall": "npm run webpack",
-    "start": "npm run webpack && node server.js",
-    "webpack": "npx webpack --mode development"
+    "postinstall": "npm run build",
+    "build": "ng build",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -24,14 +24,46 @@
   },
   "homepage": "https://github.com/JaceyPenny/stock-ticker-frontend#readme",
   "dependencies": {
+    "@angular/animations": "^6.1.7",
+    "@angular/cdk": "^6.1.7",
+    "@angular/common": "^6.1.7",
+    "@angular/compiler": "^6.1.7",
+    "@angular/core": "^6.1.7",
+    "@angular/forms": "^6.1.7",
+    "@angular/http": "^6.1.7",
+    "@angular/material": "^6.1.7",
+    "@angular/platform-browser": "^6.1.7",
+    "@angular/platform-browser-dynamic": "^6.1.7",
+    "@angular/router": "^6.1.7",
     "body-parser": "^1.18.3",
+    "core-js": "^2.4.1",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "webpack": "^4.19.0"
+    "rxjs": "^6.3.2",
+    "zone.js": "^0.8.19"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^0.8.2",
+    "@angular/cli": "^6.1.7",
+    "@angular/compiler-cli": "^6.1.7",
+    "@angular/language-service": "^6.1.7",
+    "@types/jasmine": "~2.8.3",
+    "@types/jasminewd2": "~2.0.2",
+    "@types/node": "~6.0.60",
+    "codelyzer": "^4.0.1",
     "dotenv": "^6.0.0",
     "eslint": "^5.5.0",
+    "jasmine-core": "~2.8.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~2.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "^1.2.1",
+    "karma-jasmine": "~1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "~5.1.2",
+    "ts-node": "~4.1.0",
+    "tslint": "~5.9.1",
+    "typescript": "^2.9.0",
     "webpack-cli": "^3.1.0"
   }
 }

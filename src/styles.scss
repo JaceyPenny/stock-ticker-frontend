@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+.right-aligned-header > .mat-content {
+    justify-content: space-between;
+}
+
+.mat-content > mat-panel-title, .mat-content > mat-panel-description {
+  flex: 0 0 auto;
+}
+
+.padded {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.header-text {
+  color: white;
+  text-align: center;
+  width: 100%;
+  margin-top: 80px;
+  margin-bottom: 40px;
+
+  h2 {
+    font-size: 40px;
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+}
