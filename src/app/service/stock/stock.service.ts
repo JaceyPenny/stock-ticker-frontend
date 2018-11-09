@@ -40,16 +40,36 @@ export class StockService {
         });
     }
 
-    getStockQuotes(stockSymbols: string[]): Promise<Stock[]> {
+    getStockQuotes = ((stockSymbols: string[]): Promise<Stock[]> => {
         return this.http.get(this.iexStocksUrl(stockSymbols)).toPromise().then(response => {
-            // TODO (jace) map response to list of Stock objects
-            return [];
+            stockSymbols.sort();
+
+            let responseBody = response.json();
+            let stocks: Stock[] = [];
+            for (let stockSymbol of stockSymbols) {
+                if (stockSymbol in responseBody) {
+                    let stockItem = responseBody[stockSymbol]['quote'];
+
+                    let stock = new Stock();
+                    stock.symbol = stockSymbol;
+                    stock.name = stockItem['companyName'];
+                    stock.price = stockItem['latestPrice'];
+                    stock.close = stockItem['close'];
+
+                    console.log(stockItem);
+                    console.log(stock.name);
+
+                    stocks.push(stock);
+                }
+            }
+
+            return stocks;
         });
-    }
+    }).bind(this);
 
     getStocks(): Promise<Stock[]> {
-        return this.getStockList().then((stockSymbols: string[]) => {
-            return [];
+        return this.getStockList().then((response) => {
+            return this.getStockQuotes(response);
         });
     }
 }

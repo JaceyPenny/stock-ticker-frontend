@@ -19,7 +19,22 @@
                     Your Stocks
                 </mat-card-title>
 
-                ... wip 2 ...
+                <mat-list *ngIf="stocks">
+                    <mat-list-item *ngFor="let stock of stocks">
+                        <h3 mat-line> {{stock.symbol}} </h3>
+                        <p mat-line>
+                            <span> {{stock.name}} </span>
+                        </p>
+                        <div></div>
+                        <button mat-icon-button (click)="requestDelete(stock)">
+                            <mat-icon class="mat-24">delete</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+
+                <mat-card-content *ngIf="!stocks">
+                    Loading...
+                </mat-card-content>
             </mat-card>
         </div>
     </div>

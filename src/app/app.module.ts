@@ -13,6 +13,7 @@ import { AuthenticationService } from './service/authentication/authentication.s
 import { Http, HttpModule } from '@angular/http';
 import { MaterialModule } from './material/material.module';
 import { DashboardLayoutComponent } from './dashboard/layout/dashboard-layout.component';
+import { StockService } from './service/stock/stock.service';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { DashboardLayoutComponent } from './dashboard/layout/dashboard-layout.co
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     AuthGuard,
     StorageService,
-    AuthenticationService
+    AuthenticationService,
+    StockService,
   ],
   bootstrap: [AppComponent]
 })
