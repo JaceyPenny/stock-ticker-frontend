@@ -14,6 +14,7 @@ import { Http, HttpModule } from '@angular/http';
 import { MaterialModule } from './material/material.module';
 import { DashboardLayoutComponent } from './dashboard/layout/dashboard-layout.component';
 import { StockService } from './service/stock/stock.service';
+import { SearchService } from './service/search/search.service';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { StockService } from './service/stock/stock.service';
     StorageService,
     AuthenticationService,
     StockService,
+    SearchService,
   ],
   bootstrap: [AppComponent]
 })

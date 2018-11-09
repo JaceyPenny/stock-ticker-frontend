@@ -2,15 +2,35 @@
     <div class="row">
         <div class="col-md-6">
             <mat-card>
-                <mat-card-title>
-                    Search New Stocks
-                </mat-card-title>
+                <mat-form-field *ngIf="searchState === SEARCH_LOADED || searchState === SEARCHING" class="max-width">
+                    <input #searchField class="max-width" matInput type="search" placeholder="Search for new stocks (hit Enter)" (keyup.enter)="requestSearch(searchField.value)">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+                
+                <div *ngIf="searchState === LOADING_SEARCH || searchState === SEARCHING">
+                        <mat-spinner class="loading-spinner" diameter="36"></mat-spinner>
+                    </div>
 
-                <mat-list>
-                    <mat-list-item *ngFor="let stock of userStocks">
-                        {{stock.symbol}}
-                    </mat-list-item>
-                </mat-list>
+                <mat-card-content *ngIf="searchState === SEARCH_LOADED">
+                    <div *ngIf="searchResults.length === 0">
+                        <p>No results.</p>
+                    </div>
+                    <div *ngIf="searchResults.length > 0">
+                        <mat-list>
+                            <mat-list-item *ngFor="let result of searchResults">
+                                <h3 mat-line> {{result.symbol}} </h3>
+                                <p mat-line>
+                                    <span> {{result.name}} </span>
+                                </p>
+                                <div></div>
+                                <button mat-icon-button (click)="requestAdd(result)">
+                                    <mat-icon class="mat-24">add</mat-icon>
+                                </button>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                    
+                </mat-card-content>
             </mat-card>
         </div>
         <div class="col-md-6">
@@ -32,9 +52,9 @@
                     </mat-list-item>
                 </mat-list>
 
-                <mat-card-content *ngIf="!stocks">
-                    Loading...
-                </mat-card-content>
+                <div *ngIf="stocks.length === 0">
+                    <mat-spinner class="loading-spinner" diameter="36"></mat-spinner>
+                </div>
             </mat-card>
         </div>
     </div>
