@@ -7,14 +7,15 @@
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
                 
-                <div *ngIf="searchState === LOADING_SEARCH || searchState === SEARCHING">
-                        <mat-spinner class="loading-spinner" diameter="36"></mat-spinner>
-                    </div>
+                <div *ngIf="shouldShowSpinner">
+                    <mat-spinner class="loading-spinner" diameter="36"></mat-spinner>
+                </div>
 
                 <mat-card-content *ngIf="searchState === SEARCH_LOADED">
                     <div *ngIf="searchResults.length === 0">
                         <p>No results.</p>
                     </div>
+
                     <div *ngIf="searchResults.length > 0">
                         <mat-list>
                             <mat-list-item *ngFor="let result of searchResults">
@@ -29,7 +30,6 @@
                             </mat-list-item>
                         </mat-list>
                     </div>
-                    
                 </mat-card-content>
             </mat-card>
         </div>
@@ -39,20 +39,20 @@
                     Your Stocks
                 </mat-card-title>
 
-                <mat-list *ngIf="stocks">
-                    <mat-list-item *ngFor="let stock of stocks">
+                <mat-list *ngIf="stockList.size() > 0">
+                    <mat-list-item *ngFor="let stock of stockList.stocks">
                         <h3 mat-line> {{stock.symbol}} </h3>
                         <p mat-line>
                             <span> {{stock.name}} </span>
                         </p>
                         <div></div>
                         <button mat-icon-button (click)="requestDelete(stock)">
-                            <mat-icon class="mat-24">delete</mat-icon>
+                            <mat-icon class="mat-24">clear</mat-icon>
                         </button>
                     </mat-list-item>
                 </mat-list>
 
-                <div *ngIf="stocks.length === 0">
+                <div *ngIf="stockList.size() === 0">
                     <mat-spinner class="loading-spinner" diameter="36"></mat-spinner>
                 </div>
             </mat-card>

@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
-import { Stock, StockService } from '../service/stock/stock.service';
+import { Stock, StockService, StockList } from '../service/stock/stock.service';
 import { SearchService, SearchResult } from '../service/search/search.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-dashboard',
@@ -13,18 +14,31 @@ export class DashboardComponent implements AfterViewInit {
     LOADING_SEARCH = 1;
     SEARCHING = 2;
 
-    stocks: Stock[] = []
+    stockList: StockList = new StockList();
     searchState = this.LOADING_SEARCH;
     searchResults: SearchResult[] = [];
 
-    constructor(private stockService: StockService, private searchService: SearchService) { }
+    get shouldShowSpinner(): boolean {
+        return this.searchState === this.LOADING_SEARCH || this.searchState === this.SEARCHING;
+    }
+
+    constructor(
+        private stockService: StockService,
+        private searchService: SearchService,
+        private snackBar: MatSnackBar) { }
+
+    showSnackBar(message: string, duration: number = 2000) {
+        this.snackBar.open(message, null, {
+            duration: duration
+        });
+    }
 
     ngAfterViewInit(): void {
         this.stockService.getStocks().then((response) => {
             if (typeof response === 'string') {
                 console.log(response);
             } else {
-                this.stocks = response;
+                this.stockList = response;
             }
         });
 
@@ -36,12 +50,23 @@ export class DashboardComponent implements AfterViewInit {
     }
 
     requestDelete(stock: Stock) {
-        console.log('Requested deletion of ' + stock.symbol);
+        this.stockList.remove(stock);
+        this.stockService.setStocks(this.stockList).then(ok => {
+            if (ok) {
+                this.showSnackBar('Removed ' + stock.symbol + ' from your stocks.');
+            } else {
+                this.showSnackBar('Something went wrong. ' + stock.symbol + ' was not added.');
+            }
+        });
     }
 
     requestSearch(value: string) {
         if (value.length <= 1) {
             this.searchResults = [];
+            return;
+        }
+
+        if (this.searchState === this.SEARCHING) {
             return;
         }
 
