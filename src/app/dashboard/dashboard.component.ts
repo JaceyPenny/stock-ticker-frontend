@@ -78,6 +78,23 @@ export class DashboardComponent implements AfterViewInit {
     }
 
     requestAdd(searchResult: SearchResult) {
-        console.log('Requested addition of ' + searchResult.symbol);
+        this.stockService.getStockQuote(searchResult.symbol).then(stock => {
+            if (stock !== null) {
+                if (this.stockList.add(stock)) {
+                    this.stockService.setStocks(this.stockList).then(ok => {
+                        if (ok) {
+                            this.showSnackBar('Added ' + stock.symbol + ' to your stocks.');
+                        } else {
+                            this.stockList.remove(stock);
+                            this.showSnackBar('Something went wrong. Could not add ' + stock.symbol + '.');
+                        }
+                    });
+                } else {
+                    this.showSnackBar('You are already tracking ' + stock.symbol + '!');
+                }
+            } else {
+                this.showSnackBar('Something went wrong. Could not add ' + searchResult.symbol);
+            }
+        });
     }
 }

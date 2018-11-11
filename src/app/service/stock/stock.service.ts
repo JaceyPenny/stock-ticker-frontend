@@ -15,12 +15,12 @@ export class Stock {
     }
 
     compareTo(other: Stock): number {
-        let otherName = other.name;
-        let thisName = this.name;
+        let otherSymbol = other.symbol;
+        let thisSymbol = this.symbol;
 
-        if (thisName == otherName) {
+        if (thisSymbol == otherSymbol) {
             return 0;
-        } else if (thisName < otherName) {
+        } else if (thisSymbol < otherSymbol) {
             return -1;
         } else {
             1;
@@ -48,7 +48,7 @@ export class StockList {
         var counter = 0;
         for (let s of this.stocks) {
             let comparison = s.compareTo(stock);
-            if (comparison === -1) {
+            if (comparison < 0) {
                 desiredIndex = counter;
             } else if (comparison === 0) {
                 return false;
@@ -108,6 +108,26 @@ export class StockService {
         });
     }
 
+    getStockQuote(symbol: string): Promise<Stock> {
+        return this.http.get(this.iexStocksUrl([symbol])).toPromise().then(response => {
+            if (response.ok) {
+                let body = response.json();
+                if (symbol in body) {
+                    let stockItem = body[symbol]['quote'];
+                    let stock = new Stock();
+                    stock.name = stockItem['companyName'];
+                    stock.symbol = symbol;
+                    stock.price = stockItem['latestPrice'];
+                    stock.close = stockItem['close'];
+
+                    return stock;
+                }
+            } else {
+                return null;
+            }
+        });
+    }
+
     getStockQuotes = ((stockSymbols: string[]): Promise<StockList> => {
         return this.http.get(this.iexStocksUrl(stockSymbols)).toPromise().then(response => {
             stockSymbols.sort();
@@ -123,9 +143,6 @@ export class StockService {
                     stock.name = stockItem['companyName'];
                     stock.price = stockItem['latestPrice'];
                     stock.close = stockItem['close'];
-
-                    console.log(stockItem);
-                    console.log(stock.name);
 
                     stocks.push(stock);
                 }
@@ -149,8 +166,6 @@ export class StockService {
                 if (response && 'status' in response.json()) {
                     return response.json()['status'] === 'ok'
                 } else {
-                    console.log('response was: ');
-                    console.log(response.json());
                     return false;
                 }
             });
