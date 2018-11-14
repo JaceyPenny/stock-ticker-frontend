@@ -79,9 +79,30 @@ export class StockList {
     }
 }
 
+export class BrightnessSpeed {
+    brightness: number;
+    speed: number;
+
+    constructor(stringValue: string = null) {
+        if (stringValue !== null) {
+            let items = stringValue.split(',');
+            this.brightness = parseInt(items[0]);
+            this.speed = parseFloat(items[1]);
+        } else {
+            this.brightness = 50;
+            this.speed = 3;
+        }
+    }
+
+    toString(): string {
+        return '' + this.brightness + ',' + this.speed;
+    }
+}
+
 @Injectable()
 export class StockService {
     private MASHAPE_URL = 'https://kvstore.p.mashape.com/collections/stocks/items/stocks';
+    private MASHAPE_BRIGHTNESS_SPEED_URL = 'https://kvstore.p.mashape.com/collections/stocks/items/brightness_speed';
 
     constructor(private http: Http, private storageService: StorageService) {}
 
@@ -93,6 +114,28 @@ export class StockService {
         const headers = new Headers();
         headers.set('X-Mashape-Key', this.mashapeKey);
         return headers;
+    }
+
+    getBrightnessSpeed(): Promise<BrightnessSpeed> {
+        return this.http
+            .get(this.MASHAPE_BRIGHTNESS_SPEED_URL, { headers: this.mashapeHeaders })
+            .toPromise().then(response => {
+                let stringValue = response.json().value;
+                return new BrightnessSpeed(stringValue);
+            });
+    }
+
+    setBrightnessSpeed(brightnessSpeed: BrightnessSpeed): Promise<boolean> {
+        return this.http
+            .put(this.MASHAPE_BRIGHTNESS_SPEED_URL, brightnessSpeed.toString(), { headers: this.mashapeHeaders })
+            .toPromise()
+            .then(response => {
+                if (response && 'status' in response.json()) {
+                    return response.json()['status'] === 'ok'
+                } else {
+                    return false;
+                }
+            });
     }
 
     iexStocksUrl(stockSymbols: string[]): string {

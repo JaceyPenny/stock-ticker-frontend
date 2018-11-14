@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 import { MaterialModule } from '../material/material.module';
+import { BrightnessSpeedComponent } from './brightness-speed/brightness-speed.component';
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import { MaterialModule } from '../material/material.module';
     ],
     declarations: [
         DashboardComponent,
+        BrightnessSpeedComponent,
     ], entryComponents: [
         // Dialog components
     ]

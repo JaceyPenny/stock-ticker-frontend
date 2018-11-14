@@ -1,5 +1,11 @@
 <div class="container-fluid padded centered-maxed">
     <div class="row">
+        <div class="col-md-6" style="margin-bottom: 20px;">
+            <app-brightness-speed></app-brightness-speed>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-6">
             <mat-card>
                 <mat-form-field *ngIf="searchState === SEARCH_LOADED || searchState === SEARCHING" class="max-width">

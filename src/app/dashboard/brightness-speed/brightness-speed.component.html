@@ -1,0 +1,23 @@
+<mat-card style="width: 100%">
+    <mat-card-title>
+        <div *ngIf="loadingBS">
+            Loading Settings...
+        </div>
+
+        <div *ngIf="!loadingBS">
+            General Settings
+        </div>
+    </mat-card-title>
+
+    <mat-card-content>
+        <mat-form-field>
+            <input #brightnessField class="max-width" matInput type="number" placeholder="Brightness (50 default)" (keyup)="brightnessChanged(brightnessField.value)" [(value)]="brightness">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input #speedField class="max-width" matInput type="number" placeholder="Speed (3 default)" (keyup)="speedChanged(speedField.value)" [(value)]="speed">
+        </mat-form-field>
+
+        <button mat-button color="primary" (click)="submitClicked()">Submit</button>
+    </mat-card-content>
+</mat-card>
